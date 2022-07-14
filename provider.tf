@@ -36,5 +36,5 @@ resource "aws_instance" "My-instance" {
   instance_type               = "${var.instance_type}"
   associate_public_ip_address = true
   security_groups             = [aws_security_group.my_ec2_sg.id]
-  key_name =  "${var.keyname}"
+   #key_name =  "${var.keyname}"
 }
