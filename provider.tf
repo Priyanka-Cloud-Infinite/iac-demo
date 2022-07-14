@@ -46,5 +46,7 @@ resource "aws_instance" "My-instance" {
   key_name                    = aws_key_pair.aws_key.key_name
   associate_public_ip_address = true
   security_groups             = [aws_security_group.my_ec2_sg.id]
-  
+  tags={
+  Name="Terra-Jenkins
+  }
 }
