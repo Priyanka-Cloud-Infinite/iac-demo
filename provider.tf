@@ -47,6 +47,6 @@ resource "aws_instance" "My-instance" {
   associate_public_ip_address = true
   security_groups             = [aws_security_group.my_ec2_sg.id]
   tags={
-  Name="Terra-Jenkins
+  Name="Terra-Jenkins"
   }
 }
