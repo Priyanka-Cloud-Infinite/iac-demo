@@ -54,7 +54,7 @@ resource "aws_instance" "My-instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = "${file("${aws_key_pair.aws_key}/bitops-ssh-key")}"  #file(pathexpand("~/.ssh/id_rsa"))     #${aws_key_pair.aws_key.key_name} ${file("~/.ssh/bitops-ssh-key.pem")}
+      private_key =  ${tls_private_key.dev_key.private_key_pem}  #"${file("${aws_key_pair.aws_key}/bitops-ssh-key")}"  #file(pathexpand("~/.ssh/id_rsa"))     #${aws_key_pair.aws_key.key_name} ${file("~/.ssh/bitops-ssh-key.pem")}
       host        =  ${aws_instance.My-instance.public_ip}      #coalesce(self.public_ip, self.private_ip) 
     }
   }
