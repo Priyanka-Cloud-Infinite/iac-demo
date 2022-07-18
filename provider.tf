@@ -53,7 +53,7 @@ resource "aws_instance" "My-instance" {
     inline = ["echo 'Wait until SSH is ready'"]
     connection {
       type        = "ssh"
-      user        = "ec2-user"
+      user        = "ubuntu"
       private_key = ${aws_key_pair.aws_key.key_name}
       host        = ${aws_instance.My-instance.public_ip}
     }
