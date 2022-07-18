@@ -34,9 +34,13 @@ resource "tls_private_key" "key" {
  rsa_bits  = 4096
 }
  
-resource "aws_key_pair" "aws_key" {
+resource "aws_key_pair" "bitops-ssh-key" {      #aws_key
  key_name   = "bitops-ssh-key"
  public_key = tls_private_key.key.public_key_openssh
+}
+
+variable privatekey{
+  default= "bitops-ssh-key"
 }
 
 resource "aws_instance" "My-instance" {
@@ -54,11 +58,11 @@ resource "aws_instance" "My-instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = ${file("aws_key_pair.aws_key.key_name")}  #${aws_key_pair.aws_key.key_name}
+      private_key = ${file("./bitops-ssh-key")}  #${aws_key_pair.aws_key.key_name}
       host        = ${aws_instance.My-instance.public_ip}
     }
   }
   provisioner "local-exec"{
-    command = "ansible-playbook -i ${aws_instance.My-instance.public_ip}, --private-key ${aws_key_pair.aws_key.key_name} nginx.yaml"
+    command = "ansible-playbook -i ${aws_instance.My-instance.public_ip}, --private-key ${var.privatekey} nginx.yaml"
   }
 }
