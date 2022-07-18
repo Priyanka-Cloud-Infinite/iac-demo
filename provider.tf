@@ -55,7 +55,7 @@ resource "aws_instance" "My-instance" {
       type        = "ssh"
       user        = "ubuntu"
       private_key = file(pathexpand("~/.ssh/id_rsa"))   #"${file("${aws_key_pair.aws_key}/bitops-ssh-key")}"   #${aws_key_pair.aws_key.key_name} ${file("~/.ssh/bitops-ssh-key.pem")}
-      host        = ${aws_instance.My-instance.public_ip}
+      host        = ${self.public_ip}   #aws_instance.My-instance
     }
   }
   provisioner "local-exec"{
