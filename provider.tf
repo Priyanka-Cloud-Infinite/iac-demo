@@ -49,15 +49,6 @@ resource "aws_instance" "My-instance" {
   tags={
     Name="Terra-Jenkins"
   }
-   provisioner "remote-exec" {
-    inline = ["echo 'Wait until SSH is ready'"]
-    connection {
-      type        = "ssh"
-      user        = "ec2-user"
-      private_key = ${aws_key_pair.aws_key.key_name}
-      host        = ${aws_instance.My-instance.public_ip}
-    }
-  }
   provisioner "local-exec"{
     command = "ansible-playbook -i ${aws_instance.My-instance.public_ip}, --private-key ${aws_key_pair.aws_key.key_name} nginx.yaml"
   }
