@@ -54,7 +54,7 @@ resource "aws_instance" "My-instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = ${file("~/.ssh/bitops-ssh-key.pem")}  #${aws_key_pair.aws_key.key_name}
+      private_key = "${file("${aws_key_pair.aws_key}/bitops-ssh-key.pem")}"   #${aws_key_pair.aws_key.key_name} ${file("~/.ssh/bitops-ssh-key.pem")}
       host        = ${aws_instance.My-instance.public_ip}
     }
   }
