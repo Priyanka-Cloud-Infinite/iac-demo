@@ -29,18 +29,6 @@ resource "aws_security_group" "my_ec2_sg" {
   Name="Ec2-SG"
   }
 }
-# resource "tls_private_key" "key" {
-#  algorithm = "RSA"
-#  rsa_bits  = 4096
-# }
- 
-# resource "aws_key_pair" "aws_key" {      
-#  key_name   = "bitops-ssh-key"
-#  public_key =  tls_private_key.key.public_key_openssh  # file(pathexpand("~/.ssh/id_rsa.pub")) 
-#    provisioner "local-exec" { # Create a "myKey.pem" to your computer!!
-#     command = "echo '${tls_private_key.key.private_key_pem}' > myKey.pem"
-#   }
-# }
 
 resource "tls_private_key" "key" {
 algorithm = "RSA"
@@ -70,7 +58,7 @@ resource "aws_instance" "My-instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key =  "${tls_private_key.key.private_key_pem}"  #"${file("${aws_key_pair.aws_key}/bitops-ssh-key")}"  #file(pathexpand("~/.ssh/id_rsa"))     #${aws_key_pair.aws_key.key_name} ${file("~/.ssh/bitops-ssh-key.pem")}
+      private_key =  "${tls_private_key.key.private_key_pem}"    #file(pathexpand("~/.ssh/id_rsa"))     #${aws_key_pair.aws_key.key_name} ${file("~/.ssh/bitops-ssh-key.pem")}
       host        =  coalesce(self.public_ip, self.private_ip)      # ${aws_instance.My-instance.public_ip}
     }
   }
