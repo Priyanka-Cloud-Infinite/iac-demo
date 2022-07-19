@@ -49,16 +49,5 @@ resource "aws_instance" "My-instance" {
   tags={
     Name="Terra-Jenkins"
   }
-  provisioner "remote-exec" {
-    inline = ["echo 'Wait until SSH is ready'"]
-    connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key =  ${tls_private_key.key.private_key_pem}  #"${file("${aws_key_pair.aws_key}/bitops-ssh-key")}"  #file(pathexpand("~/.ssh/id_rsa"))     #${aws_key_pair.aws_key.key_name} ${file("~/.ssh/bitops-ssh-key.pem")}
-      host        =  coalesce(self.public_ip, self.private_ip)      # ${aws_instance.My-instance.public_ip}
-    }
-  }
-  provisioner "local-exec"{
-    command = "ansible-playbook -i ${aws_instance.My-instance.public_ip}, --private-key ${aws_key_pair.aws_key.key_name} nginx.yaml"
-  }
+
 }
