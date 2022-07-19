@@ -62,6 +62,6 @@ resource "aws_instance" "My-instance" {
     }
   }
   provisioner "local-exec"{
-    command = "ansible-playbook -i ${aws_instance.My-instance.public_ip}, --private-key ${aws_key_pair.aws_key.key_name} nginx.yaml"
+    command = "ansible-playbook -i ${aws_instance.My-instance.public_ip}, --private-key myKey.pem nginx.yaml"    #${aws_key_pair.aws_key.key_name}
   }
 }
