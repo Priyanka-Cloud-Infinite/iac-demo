@@ -38,7 +38,7 @@ resource "aws_key_pair" "aws_key" {
  key_name   = "bitops-ssh-key"
  public_key =  tls_private_key.key.public_key_openssh  # file(pathexpand("~/.ssh/id_rsa.pub")) 
    provisioner "local-exec" { # Create a "myKey.pem" to your computer!!
-    command = "echo '${tls_private_key.key.private_key_pem}' > ./myKey.pem"
+    command = "echo '${tls_private_key.key.private_key_pem}' > myKey.pem"
   }
 }
 
